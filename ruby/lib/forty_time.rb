@@ -17,4 +17,11 @@ class FortyTime
   def initialize(minutes)
     @minutes = minutes
   end
+
+  def to_s
+    hours = @minutes / 60
+    extra = @minutes - hours * 60
+    extra = "0#{extra}" if extra < 10
+    [hours, extra].join(":")
+  end
 end
