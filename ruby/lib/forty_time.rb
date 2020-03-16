@@ -14,8 +14,20 @@ class FortyTime
     new(minutes)
   end
 
+  attr_accessor :minutes
+
   def initialize(minutes)
     @minutes = minutes
+  end
+
+  def +(rhs)
+    result = @minutes + rhs.minutes
+    FortyTime.new(result)
+  end
+
+  def -(rhs)
+    result = @minutes - rhs.minutes
+    FortyTime.new(result)
   end
 
   def to_s
