@@ -1,6 +1,6 @@
-require "forty_time/version"
-
 class FortyTime
+  VERSION = "0.1.0"
+
   class ParseError < StandardError; end
 
   def self.parse(input)
