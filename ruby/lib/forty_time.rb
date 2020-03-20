@@ -1,5 +1,5 @@
 class FortyTime
-  VERSION = "0.1.0"
+  VERSION = "0.0.1"
 
   class ParseError < StandardError; end
 
