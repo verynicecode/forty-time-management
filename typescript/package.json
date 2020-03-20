@@ -1,7 +1,9 @@
 {
   "name": "forty-time",
   "version": "0.0.1",
-  "main": "index.js",
+  "description": "This package helps one go between intergers and strings to represent time amounts.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Jon Allured",
   "license": "MIT",
   "private": false,
@@ -19,5 +21,8 @@
     "transform": {
       "^.+\\.(ts|tsx|js|jsx)$": "babel-jest"
     }
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }

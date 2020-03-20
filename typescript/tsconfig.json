@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "forceConsistentCasingInFileNames": true,
+    "lib": ["es2017", "es7", "es6", "dom"],
     "module": "commonjs",
+    "outDir": "dist",
     "skipLibCheck": true,
     "strict": true,
     "target": "es5"
   },
   "exclude": [
+    "**/*.spec.ts",
+    "dist",
     "node_modules"
   ]
 }
