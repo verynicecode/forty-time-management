@@ -3,11 +3,15 @@ version: 2
 global_defaults: &global_defaults
   working_directory: ~/forty-time-management
 
-
 ruby_defaults: &ruby_defaults
   <<: *global_defaults
   docker:
     - image: ruby:2.6.5
+
+typescript_defaults: &typescript_defaults
+  <<: *global_defaults
+  docker:
+    - image: node:10.15.3
 
 jobs:
   build_ruby:
@@ -71,6 +75,42 @@ jobs:
       #     name: Publish gem
       #     command: cd ruby && gem push "forty_time-$(git describe --tags).gem"
 
+  build_typescript:
+    <<: *typescript_defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restore yarn cache
+          key: yarn-{{ checksum "typescript/yarn.lock" }}
+
+      - run:
+          name: Yarn install
+          command: cd typescript && yarn install
+
+      - save_cache:
+          name: Save yarn cache
+          key: yarn-{{ checksum "typescript/yarn.lock" }}
+          paths:
+            - typescript/node_modules/
+
+  test_typescript:
+    <<: *typescript_defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restore yarn cache
+          key: yarn-{{ checksum "typescript/yarn.lock" }}
+
+      - run:
+          name: Yarn install
+          command: cd typescript && yarn install
+
+      - run:
+          name: Run tests
+          command: cd typescript && yarn test
+
 workflows:
   version: 2
   default:
@@ -79,6 +119,10 @@ workflows:
       - test_ruby:
           requires:
             - build_ruby
+      - build_typescript
+      - test_typescript:
+          requires:
+            - build_typescript
   release:
     jobs:
       - deploy_ruby:
