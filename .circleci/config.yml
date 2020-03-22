@@ -71,9 +71,9 @@ jobs:
           name: Build gem
           command: cd ruby && gem build forty_time.gemspec
 
-      # - run:
-      #     name: Publish gem
-      #     command: cd ruby && gem push "forty_time-$(git describe --tags).gem"
+      - run:
+          name: Publish gem
+          command: cd ruby && gem push "forty_time-$(git describe --tags).gem"
 
   build_typescript:
     <<: *typescript_defaults
@@ -111,6 +111,19 @@ jobs:
           name: Run tests
           command: cd typescript && yarn test
 
+  deploy_typescript:
+    <<: *typescript_defaults
+    steps:
+      - checkout
+
+      - run:
+          name: Setup NPM
+          command: bash .circleci/setup-npm
+
+      - run:
+          name: Publish package
+          command: cd typescript &&B npm publish
+
 workflows:
   version: 2
   default:
@@ -126,6 +139,12 @@ workflows:
   release:
     jobs:
       - deploy_ruby:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy_typescript:
           filters:
             tags:
               only: /^v.*/
