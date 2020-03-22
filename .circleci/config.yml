@@ -1,0 +1,90 @@
+version: 2
+
+global_defaults: &global_defaults
+  working_directory: ~/forty-time-management
+
+
+ruby_defaults: &ruby_defaults
+  <<: *global_defaults
+  docker:
+    - image: ruby:2.6.5
+
+jobs:
+  build_ruby:
+    <<: *ruby_defaults
+    steps:
+      - checkout
+
+      - run:
+          name: Gem install bundler
+          command: gem update --system && gem install bundler
+
+      - restore_cache:
+          name: Restore bundler cache
+          key: bundler-{{ checksum "ruby/Gemfile.lock" }}
+
+      - run:
+          name: Bundle install
+          command: cd ruby && bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          name: Save bundler cache
+          key: bundler-{{ checksum "ruby/Gemfile.lock" }}
+          paths:
+            - ruby/vendor/bundle
+
+  test_ruby:
+    <<: *ruby_defaults
+    steps:
+      - checkout
+
+      - run:
+          name: Gem install bundler
+          command: gem update --system && gem install bundler
+
+      - restore_cache:
+          name: Restore bundler cache
+          key: bundler-{{ checksum "ruby/Gemfile.lock" }}
+
+      - run:
+          name: Bundle install
+          command: cd ruby && bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run:
+          name: Run tests
+          command: cd ruby && bundle exec rake
+
+  deploy_ruby:
+    <<: *ruby_defaults
+    steps:
+      - checkout
+
+      - run:
+          name: Setup Rubygems
+          command: bash .circleci/setup-rubygems.sh
+
+      - run:
+          name: Build gem
+          command: cd ruby && gem build forty_time.gemspec
+
+      - run:
+          name: Publish gem
+          command: cd ruby && gem push "forty_time-$(git describe --tags).gem"
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - build_ruby
+      - test_ruby:
+          requires:
+            - build_ruby
+  release:
+    jobs:
+      - build_ruby:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy_ruby:
+          requires:
+            - build_ruby
