@@ -61,15 +61,15 @@ jobs:
 
       - run:
           name: Setup Rubygems
-          command: bash .circleci/setup-rubygems.sh
+          command: bash .circleci/setup-rubygems
 
       - run:
           name: Build gem
           command: cd ruby && gem build forty_time.gemspec
 
-      - run:
-          name: Publish gem
-          command: cd ruby && gem push "forty_time-$(git describe --tags).gem"
+      # - run:
+      #     name: Publish gem
+      #     command: cd ruby && gem push "forty_time-$(git describe --tags).gem"
 
 workflows:
   version: 2
@@ -81,10 +81,9 @@ workflows:
             - build_ruby
   release:
     jobs:
-      - build_ruby:
+      - deploy_ruby:
           filters:
             tags:
               only: /^v.*/
-      - deploy_ruby:
-          requires:
-            - build_ruby
+            branches:
+              ignore: /.*/
