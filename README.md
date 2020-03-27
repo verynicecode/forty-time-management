@@ -2,8 +2,8 @@
 
 This project contains libraries for the following languages:
 
-* Ruby
-* TypeScript
+* Ruby: https://rubygems.org/gems/forty_time
+* TypeScript: https://www.npmjs.com/package/forty-time
 
 It's used to encapsulate some business logic that's shared wherever I write code
 for the Forty project.
