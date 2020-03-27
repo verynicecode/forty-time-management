@@ -121,6 +121,10 @@ jobs:
           command: bash .circleci/setup-npm
 
       - run:
+          name: Build package
+          command: cd typescript && yarn build
+
+      - run:
           name: Publish package
           command: cd typescript && npm publish
 
