@@ -22,4 +22,16 @@ export class FortyTime {
   constructor(minutes: number) {
     this.minutes = minutes
   }
+
+  plus = (other: FortyTime): FortyTime => {
+    const sum = this.minutes + other.minutes
+    const result = new FortyTime(sum)
+    return result
+  }
+
+  minus = (other: FortyTime): FortyTime => {
+    const diff = this.minutes - other.minutes
+    const result = new FortyTime(diff)
+    return result
+  }
 }

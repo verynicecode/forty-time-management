@@ -38,4 +38,22 @@ describe("FortyTime", () => {
       })
     })
   })
+
+  describe("math", () => {
+    it("adds two forty times", () => {
+      const lhs = FortyTime.parse(480)
+      const rhs = FortyTime.parse(20)
+      const result = lhs.plus(rhs)
+
+      expect(result.minutes).toEqual(500)
+    })
+
+    it("subtracts two forty times", () => {
+      const lhs = FortyTime.parse(1020)
+      const rhs = FortyTime.parse(480)
+      const result = lhs.minus(rhs)
+
+      expect(result.minutes).toEqual(540)
+    })
+  })
 })
