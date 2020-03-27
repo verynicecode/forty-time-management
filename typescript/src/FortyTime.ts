@@ -13,7 +13,12 @@ export class FortyTime {
     if (!input.match(/:/)) throw new FortyTime.ParseError
 
     const [hours, extra] = input.split(":").map(Number)
-    const minutes = hours * 60 + extra
+    let minutes = hours * 60 + extra
+
+    if (input[0] === '-') {
+      minutes = minutes * -1
+    }
+
     return new FortyTime(minutes)
   }
 

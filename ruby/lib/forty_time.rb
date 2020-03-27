@@ -11,6 +11,9 @@ class FortyTime
 
     hours, extra = input.split(":").map(&:to_i)
     minutes = hours * 60 + extra
+
+    minutes *= -1 if input[0] == '-'
+
     new(minutes)
   end
 
