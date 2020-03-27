@@ -120,6 +120,14 @@ jobs:
           name: Setup NPM
           command: bash .circleci/setup-npm
 
+      - restore_cache:
+          name: Restore yarn cache
+          key: yarn-{{ checksum "typescript/yarn.lock" }}
+
+      - run:
+          name: Yarn install
+          command: cd typescript && yarn install
+
       - run:
           name: Build package
           command: cd typescript && yarn build
