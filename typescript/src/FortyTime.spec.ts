@@ -10,6 +10,14 @@ describe("FortyTime", () => {
       })
     })
 
+    describe("with a negative integer", () => {
+      it("parses that number and returns an instance", () => {
+        const input = -30
+        const fortyTime = FortyTime.parse(input)
+        expect(fortyTime).toBeInstanceOf(FortyTime)
+      })
+    })
+
     describe("with a float", () => {
       it("throws a parse error", () => {
         const input = 480.5
@@ -36,6 +44,14 @@ describe("FortyTime", () => {
           expect(fortyTime).toBeInstanceOf(FortyTime)
         })
       })
+
+      describe("with a negative number", () => {
+        it("parses that string and returns an instance", () => {
+          const input = "-0:30"
+          const fortyTime = FortyTime.parse(input)
+          expect(fortyTime).toBeInstanceOf(FortyTime)
+        })
+      })
     })
   })
 
@@ -54,6 +70,14 @@ describe("FortyTime", () => {
       const result = lhs.minus(rhs)
 
       expect(result.minutes).toEqual(540)
+    })
+
+    it("subtracts negative numbers while adding", () => {
+      const lhs = FortyTime.parse("8:00")
+      const rhs = FortyTime.parse("-0:30")
+      const result = lhs.plus(rhs)
+
+      expect(result.minutes).toEqual(450)
     })
   })
 

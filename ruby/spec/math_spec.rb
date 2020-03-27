@@ -30,4 +30,14 @@ describe FortyTime do
       expect(result.minutes).to eq 480
     end
   end
+
+  describe 'with negative string amounts' do
+    it 'returns the correct result' do
+      lhs = FortyTime.parse('8:00')
+      rhs = FortyTime.parse('-0:30')
+
+      result = lhs + rhs
+      expect(result.minutes).to eq 450
+    end
+  end
 end
