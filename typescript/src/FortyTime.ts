@@ -23,6 +23,17 @@ export class FortyTime {
     this.minutes = minutes
   }
 
+  toString = (): string => {
+    const hours = Math.trunc(this.minutes / 60)
+
+    let extra: string | number = this.minutes - hours * 60
+    if (extra < 10) {
+      extra = `0${extra}`
+    }
+
+    return [hours, extra].join(":")
+  }
+
   plus = (other: FortyTime): FortyTime => {
     const sum = this.minutes + other.minutes
     const result = new FortyTime(sum)

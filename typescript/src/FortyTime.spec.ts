@@ -56,4 +56,27 @@ describe("FortyTime", () => {
       expect(result.minutes).toEqual(540)
     })
   })
+
+  describe("toString", () => {
+    describe("with an input that has no minutes", () => {
+      it("returns a properly formatted string", () => {
+        const fortyTime = new FortyTime(480)
+        expect(fortyTime.toString()).toEqual("8:00")
+      })
+    })
+
+    describe("with an input that has less than 10 minutes", () => {
+      it("returns a properly formatted string", () => {
+        const fortyTime = new FortyTime(481)
+        expect(fortyTime.toString()).toEqual("8:01")
+      })
+    })
+
+    describe("with an input that has more than 10 minutes", () => {
+      it("returns a properly formatted string", () => {
+        const fortyTime = new FortyTime(491)
+        expect(fortyTime.toString()).toEqual("8:11")
+      })
+    })
+  })
 })
