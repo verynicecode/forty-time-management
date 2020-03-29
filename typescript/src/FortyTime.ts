@@ -6,16 +6,16 @@ export class FortyTime {
       if (Number.isInteger(input)) {
         return new FortyTime(input)
       } else {
-        throw new FortyTime.ParseError
+        throw new FortyTime.ParseError()
       }
     }
 
-    if (!input.match(/:/)) throw new FortyTime.ParseError
+    if (!input.match(/:/)) throw new FortyTime.ParseError()
 
     const [hours, extra] = input.split(":").map(Number)
     let minutes = hours * 60 + extra
 
-    if (input[0] === '-') {
+    if (input[0] === "-") {
       minutes = minutes * -1
     }
 
