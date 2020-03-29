@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe FortyTime do
   describe 'add' do
     it 'returns the correct result' do

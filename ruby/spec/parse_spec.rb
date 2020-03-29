@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe FortyTime do
   describe '.parse' do
     context 'with a string' do
