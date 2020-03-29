@@ -29,9 +29,15 @@ export class FortyTime {
   }
 
   toString = (): string => {
-    const hours = Math.trunc(this.minutes / 60)
-
+    let hours: string | number = Math.trunc(this.minutes / 60)
     let extra: string | number = this.minutes - hours * 60
+
+    if (this.minutes < 0) {
+      hours = hours * -1
+      extra = extra * -1
+      hours = `-${hours}`
+    }
+
     if (extra < 10) {
       extra = `0${extra}`
     }
