@@ -22,5 +22,19 @@ describe FortyTime do
         expect(forty_time.to_s).to eq '8:11'
       end
     end
+
+    context 'with a negative amount' do
+      it 'returns a properly formatted string' do
+        forty_time = FortyTime.new(-30)
+        expect(forty_time.to_s).to eq '-0:30'
+      end
+    end
+
+    context 'with a large negative amount' do
+      it 'returns a properly formatted string' do
+        forty_time = FortyTime.new(-601)
+        expect(forty_time.to_s).to eq '-10:01'
+      end
+    end
   end
 end

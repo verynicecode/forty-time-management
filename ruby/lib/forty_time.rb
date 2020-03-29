@@ -36,8 +36,15 @@ class FortyTime
   end
 
   def to_s
-    hours = @minutes / 60
-    extra = @minutes - hours * 60
+    hours = (@minutes / 60.0).to_i
+    extra = (@minutes - hours * 60.0).to_i
+
+    if @minutes.negative?
+      hours *= -1
+      extra *= -1
+      hours = "-#{hours}"
+    end
+
     extra = "0#{extra}" if extra < 10
     [hours, extra].join(':')
   end

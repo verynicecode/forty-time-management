@@ -102,5 +102,19 @@ describe("FortyTime", () => {
         expect(fortyTime.toString()).toEqual("8:11")
       })
     })
+
+    describe("with a negative amount", () => {
+      it("returns a properly formatted string", () => {
+        const fortyTime = new FortyTime(-30)
+        expect(fortyTime.toString()).toEqual("-0:30")
+      })
+    })
+
+    describe("with a large negative amount", () => {
+      it("returns a properly formatted string", () => {
+        const fortyTime = new FortyTime(-601)
+        expect(fortyTime.toString()).toEqual("-10:01")
+      })
+    })
   })
 })
