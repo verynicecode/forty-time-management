@@ -59,5 +59,23 @@ describe FortyTime do
         end.to raise_error FortyTime::ParseError
       end
     end
+
+    context 'with some negative minutes' do
+      it 'parses that string and returns an instance with negative minutes' do
+        input = '-0:30'
+        forty_time = FortyTime.parse input
+        expect(forty_time).to be_an_instance_of(FortyTime)
+        expect(forty_time.minutes).to eq(-30)
+      end
+    end
+
+    context 'with some negative hours' do
+      it 'parses that string and returns an instance with negative minutes' do
+        input = '-1:30'
+        forty_time = FortyTime.parse input
+        expect(forty_time).to be_an_instance_of(FortyTime)
+        expect(forty_time.minutes).to eq(-90)
+      end
+    end
   end
 end

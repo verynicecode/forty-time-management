@@ -12,9 +12,9 @@ class FortyTime
     raise ParseError unless can_parse_string
 
     hours, extra = input.split(':').map(&:to_i)
-    minutes = hours * 60 + extra
+    extra *= -1 if input[0] == '-'
 
-    minutes *= -1 if input[0] == '-'
+    minutes = hours * 60 + extra
 
     new(minutes)
   end
