@@ -1,4 +1,4 @@
-# FortyTime Management
+# FortyTime Management [![CircleCI][badge]][circle]
 
 This project contains libraries for the following languages:
 
@@ -20,3 +20,6 @@ $ ./bin/release 0.0.0 0.0.1
 
 This script will find the old version, replace with the new version and then do
 all the git things to get GitHub updated and kick off the release job on Circle.
+
+[badge]: https://circleci.com/gh/verynicecode/forty-time-management.svg?style=svg
+[circle]: https://circleci.com/gh/verynicecode/forty-time-management
