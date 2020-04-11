@@ -45,11 +45,21 @@ describe("FortyTime", () => {
         })
       })
 
-      describe("with a negative number", () => {
-        it("parses that string and returns an instance", () => {
+      describe("with some negative minutes", () => {
+        it("parses that string and returns an instance with negative minutes", () => {
           const input = "-0:30"
           const fortyTime = FortyTime.parse(input)
           expect(fortyTime).toBeInstanceOf(FortyTime)
+          expect(fortyTime.minutes).toEqual(-30)
+        })
+      })
+
+      describe("with some negative hours", () => {
+        it("parses that string and returns an instance with negative minutes", () => {
+          const input = "-1:30"
+          const fortyTime = FortyTime.parse(input)
+          expect(fortyTime).toBeInstanceOf(FortyTime)
+          expect(fortyTime.minutes).toEqual(-90)
         })
       })
     })
