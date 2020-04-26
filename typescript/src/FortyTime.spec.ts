@@ -1,7 +1,18 @@
 import { FortyTime } from "./FortyTime"
+import { NullFortyTime } from "./NullFortyTime"
 
 describe("FortyTime", () => {
   describe("parsing", () => {
+    describe("with a null", () => {
+      it("returns a NullFortyTime", () => {
+        const input = null
+        const fortyTime = FortyTime.parse(input)
+        expect(fortyTime).toBeInstanceOf(NullFortyTime)
+        expect(fortyTime.minutes).toEqual(0)
+        expect(fortyTime.toString()).toEqual("")
+      })
+    })
+
     describe("with an integer", () => {
       it("parses that number and returns an instance", () => {
         const input = 480

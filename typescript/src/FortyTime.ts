@@ -1,7 +1,12 @@
-export class FortyTime {
-  static ParseError = class ParseError extends Error {}
+import { BaseFortyTime } from "./BaseFortyTime"
+import { NullFortyTime } from "./NullFortyTime"
 
-  static parse = (input: number | string) => {
+export class FortyTime extends BaseFortyTime {
+  static parse = (input: number | string | null) => {
+    if (input === null) {
+      return new NullFortyTime()
+    }
+
     if (typeof input === "number") {
       if (Number.isInteger(input)) {
         return new FortyTime(input)
@@ -23,12 +28,6 @@ export class FortyTime {
     return new FortyTime(minutes)
   }
 
-  minutes: number
-
-  constructor(minutes: number) {
-    this.minutes = minutes
-  }
-
   toString = (): string => {
     let hours: string | number = Math.trunc(this.minutes / 60)
     let extra: string | number = this.minutes - hours * 60
@@ -46,13 +45,13 @@ export class FortyTime {
     return [hours, extra].join(":")
   }
 
-  plus = (other: FortyTime): FortyTime => {
+  plus = (other: BaseFortyTime): BaseFortyTime => {
     const sum = this.minutes + other.minutes
     const result = new FortyTime(sum)
     return result
   }
 
-  minus = (other: FortyTime): FortyTime => {
+  minus = (other: BaseFortyTime): BaseFortyTime => {
     const diff = this.minutes - other.minutes
     const result = new FortyTime(diff)
     return result
