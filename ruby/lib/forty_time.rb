@@ -6,17 +6,21 @@ class FortyTime
   class ParseError < StandardError; end
 
   def self.parse(input)
+    return NullFortyTime.new if input.nil?
     return new(input) if input.is_a? Integer
 
     can_parse_string = input.is_a?(String) && input.match?(/:/)
     raise ParseError unless can_parse_string
 
-    hours, extra = input.split(':').map(&:to_i)
-    extra *= -1 if input[0] == '-'
-
-    minutes = hours * 60 + extra
-
+    minutes = parse_string(input)
     new(minutes)
+  end
+
+  def self.parse_string(string)
+    hours, extra = string.split(':').map(&:to_i)
+    extra *= -1 if string[0] == '-'
+
+    hours * 60 + extra
   end
 
   attr_accessor :minutes
@@ -49,3 +53,5 @@ class FortyTime
     [hours, extra].join(':')
   end
 end
+
+require_relative './null_forty_time'
