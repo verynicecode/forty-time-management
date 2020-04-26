@@ -44,9 +44,8 @@ describe FortyTime do
       it 'raises a parse exception' do
         input = nil
 
-        expect do
-          FortyTime.parse input
-        end.to raise_error FortyTime::ParseError
+        forty_time = FortyTime.parse input
+        expect(forty_time).to be_an_instance_of(NullFortyTime)
       end
     end
 
