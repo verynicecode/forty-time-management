@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FortyTime
-  VERSION = '0.0.5'
+  VERSION = '0.0.6'
 
   class ParseError < StandardError; end
 
