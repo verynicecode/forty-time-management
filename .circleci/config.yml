@@ -109,7 +109,7 @@ jobs:
 
       - run:
           name: Run tests
-          command: cd typescript && yarn prettier-check && yarn test
+          command: cd typescript && yarn prettier-check && yarn lint && yarn type-check && yarn test
 
   deploy_typescript:
     <<: *typescript_defaults
