@@ -110,6 +110,13 @@ describe("FortyTime", () => {
     })
   })
 
+  describe("value", () => {
+    it("returns the minutes", () => {
+      const fortyTime = new FortyTime(480)
+      expect(fortyTime.value).toEqual(480)
+    })
+  })
+
   describe("toString", () => {
     describe("with an input that has no minutes", () => {
       it("returns a properly formatted string", () => {

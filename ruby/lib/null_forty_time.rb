@@ -5,6 +5,8 @@ class NullFortyTime < FortyTime
     super(0)
   end
 
+  def value; end
+
   def +(other)
     other
   end
