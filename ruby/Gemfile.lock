@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    forty_time (0.0.4)
+    forty_time (0.0.6)
 
 GEM
   remote: https://rubygems.org/
