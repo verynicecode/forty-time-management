@@ -1,6 +1,6 @@
 {
   "name": "forty-time",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "This package helps one go between intergers and strings to represent time amounts.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
