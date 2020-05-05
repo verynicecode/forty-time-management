@@ -3,7 +3,7 @@ export const implementError = new Error("implement in subclass")
 export class BaseFortyTime {
   static ParseError = class ParseError extends Error {}
 
-  static parse = (input: number | string | null): BaseFortyTime => {
+  static parse = (_input: number | string | null): BaseFortyTime => {
     throw implementError
   }
 
@@ -21,11 +21,11 @@ export class BaseFortyTime {
     throw implementError
   }
 
-  plus = (other: BaseFortyTime): BaseFortyTime => {
+  plus = (_other: BaseFortyTime): BaseFortyTime => {
     throw implementError
   }
 
-  minus = (other: BaseFortyTime): BaseFortyTime => {
+  minus = (_other: BaseFortyTime): BaseFortyTime => {
     throw implementError
   }
 }
