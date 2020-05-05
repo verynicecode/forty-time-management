@@ -3,6 +3,15 @@
 describe FortyTime do
   describe '.parse' do
     context 'with a string' do
+      context 'with an empty string' do
+        it 'returns a NullFortyTime' do
+          input = ''
+
+          forty_time = FortyTime.parse input
+          expect(forty_time).to be_an_instance_of(NullFortyTime)
+        end
+      end
+
       context 'with a random format' do
         it 'raises a parse exception' do
           input = 'asdf'
@@ -41,7 +50,7 @@ describe FortyTime do
     end
 
     context 'with nil' do
-      it 'raises a parse exception' do
+      it 'returns a NullFortyTime' do
         input = nil
 
         forty_time = FortyTime.parse input
