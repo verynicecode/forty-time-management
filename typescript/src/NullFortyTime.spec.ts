@@ -15,6 +15,13 @@ describe("NullFortyTime", () => {
     })
   })
 
+  describe("value", () => {
+    it("returns null", () => {
+      const time = new NullFortyTime()
+      expect(time.value).toEqual(null)
+    })
+  })
+
   describe("toString", () => {
     it("returns an empty string", () => {
       const time = new NullFortyTime()

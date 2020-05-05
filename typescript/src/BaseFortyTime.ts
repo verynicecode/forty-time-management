@@ -13,6 +13,10 @@ export class BaseFortyTime {
     this.minutes = minutes
   }
 
+  get value(): number | null {
+    throw implementError
+  }
+
   toString = (): string => {
     throw implementError
   }

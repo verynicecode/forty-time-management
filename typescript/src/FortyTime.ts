@@ -2,7 +2,7 @@ import { BaseFortyTime } from "./BaseFortyTime"
 import { NullFortyTime } from "./NullFortyTime"
 
 export class FortyTime extends BaseFortyTime {
-  static parse = (input: number | string | null) => {
+  static parse = (input: number | string | null): BaseFortyTime => {
     if (input === null || input === "") {
       return new NullFortyTime()
     }
@@ -26,6 +26,10 @@ export class FortyTime extends BaseFortyTime {
     let minutes = hours * 60 + extra
 
     return new FortyTime(minutes)
+  }
+
+  get value(): number {
+    return this.minutes
   }
 
   toString = (): string => {

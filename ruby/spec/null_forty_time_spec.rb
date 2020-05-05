@@ -9,6 +9,12 @@ describe NullFortyTime do
     end
   end
 
+  describe 'value' do
+    it 'returns nil' do
+      expect(null_forty_time.value).to eq nil
+    end
+  end
+
   describe 'to_s' do
     it 'returns an empty string' do
       expect(null_forty_time.to_s).to eq ''

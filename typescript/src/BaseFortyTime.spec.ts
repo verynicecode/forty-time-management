@@ -16,6 +16,16 @@ describe("BaseFortyTime", () => {
     })
   })
 
+  describe("value", () => {
+    it("throws an error to implement in subclass", () => {
+      const time = new BaseFortyTime(10)
+
+      expect(() => {
+        time.value
+      }).toThrow(implementError)
+    })
+  })
+
   describe("toString", () => {
     it("throws an error to implement in subclass", () => {
       const time = new BaseFortyTime(10)

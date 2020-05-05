@@ -25,6 +25,8 @@ class FortyTime
 
   attr_accessor :minutes
 
+  alias value minutes
+
   def initialize(minutes)
     @minutes = minutes
   end

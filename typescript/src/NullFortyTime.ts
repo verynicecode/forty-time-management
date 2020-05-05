@@ -9,6 +9,10 @@ export class NullFortyTime extends BaseFortyTime {
     super(0)
   }
 
+  get value(): null {
+    return null
+  }
+
   toString = (): string => {
     return ""
   }
