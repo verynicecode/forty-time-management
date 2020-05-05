@@ -39,6 +39,14 @@ describe("FortyTime", () => {
     })
 
     describe("with a string", () => {
+      describe("with an empty string", () => {
+        it("returns a NullFortyTime", () => {
+          const input = ""
+          const fortyTime = FortyTime.parse(input)
+          expect(fortyTime).toBeInstanceOf(NullFortyTime)
+        })
+      })
+
       describe("with a random format", () => {
         it("throws a parse error", () => {
           const input = "asdf"

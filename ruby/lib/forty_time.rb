@@ -6,7 +6,7 @@ class FortyTime
   class ParseError < StandardError; end
 
   def self.parse(input)
-    return NullFortyTime.new if input.nil?
+    return NullFortyTime.new if input.nil? || input == ''
     return new(input) if input.is_a? Integer
 
     can_parse_string = input.is_a?(String) && input.match?(/:/)

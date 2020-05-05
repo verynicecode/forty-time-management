@@ -3,7 +3,7 @@ import { NullFortyTime } from "./NullFortyTime"
 
 export class FortyTime extends BaseFortyTime {
   static parse = (input: number | string | null) => {
-    if (input === null) {
+    if (input === null || input === "") {
       return new NullFortyTime()
     }
 
