@@ -1,15 +1,12 @@
 version: 2
 
-global_defaults: &global_defaults
-  working_directory: ~/forty-time-management
-
 ruby_defaults: &ruby_defaults
-  <<: *global_defaults
+  working_directory: ~/forty-time-management/ruby
   docker:
     - image: ruby:2.6.5
 
 typescript_defaults: &typescript_defaults
-  <<: *global_defaults
+  working_directory: ~/forty-time-management/typescript
   docker:
     - image: node:10.15.3
 
@@ -25,17 +22,17 @@ jobs:
 
       - restore_cache:
           name: Restore bundler cache
-          key: bundler-{{ checksum "ruby/Gemfile.lock" }}
+          key: bundler-{{ checksum "Gemfile.lock" }}
 
       - run:
           name: Bundle install
-          command: cd ruby && bundle install --jobs=4 --retry=3 --path vendor/bundle
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - save_cache:
           name: Save bundler cache
-          key: bundler-{{ checksum "ruby/Gemfile.lock" }}
+          key: bundler-{{ checksum "Gemfile.lock" }}
           paths:
-            - ruby/vendor/bundle
+            - vendor/bundle
 
   test_ruby:
     <<: *ruby_defaults
@@ -48,15 +45,15 @@ jobs:
 
       - restore_cache:
           name: Restore bundler cache
-          key: bundler-{{ checksum "ruby/Gemfile.lock" }}
+          key: bundler-{{ checksum "Gemfile.lock" }}
 
       - run:
           name: Bundle install
-          command: cd ruby && bundle install --jobs=4 --retry=3 --path vendor/bundle
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - run:
           name: Run tests
-          command: cd ruby && bundle exec rake
+          command: bundle exec rake
 
   deploy_ruby:
     <<: *ruby_defaults
@@ -65,15 +62,15 @@ jobs:
 
       - run:
           name: Setup Rubygems
-          command: bash .circleci/setup-rubygems
+          command: cd .. && bash .circleci/setup-rubygems
 
       - run:
           name: Build gem
-          command: cd ruby && gem build forty_time.gemspec --output forty_time.gem
+          command: gem build forty_time.gemspec --output forty_time.gem
 
       - run:
           name: Publish gem
-          command: cd ruby && gem push forty_time.gem
+          command: gem push forty_time.gem
 
   build_typescript:
     <<: *typescript_defaults
@@ -82,17 +79,17 @@ jobs:
 
       - restore_cache:
           name: Restore yarn cache
-          key: yarn-{{ checksum "typescript/yarn.lock" }}
+          key: yarn-{{ checksum "yarn.lock" }}
 
       - run:
           name: Yarn install
-          command: cd typescript && yarn install
+          command: yarn install
 
       - save_cache:
           name: Save yarn cache
-          key: yarn-{{ checksum "typescript/yarn.lock" }}
+          key: yarn-{{ checksum "yarn.lock" }}
           paths:
-            - typescript/node_modules/
+            - node_modules/
 
   test_typescript:
     <<: *typescript_defaults
@@ -101,15 +98,15 @@ jobs:
 
       - restore_cache:
           name: Restore yarn cache
-          key: yarn-{{ checksum "typescript/yarn.lock" }}
+          key: yarn-{{ checksum "yarn.lock" }}
 
       - run:
           name: Yarn install
-          command: cd typescript && yarn install
+          command: yarn install
 
       - run:
           name: Run tests
-          command: cd typescript && yarn prettier-check && yarn lint && yarn type-check && yarn test
+          command: yarn prettier-check && yarn lint && yarn type-check && yarn test
 
   deploy_typescript:
     <<: *typescript_defaults
@@ -118,23 +115,23 @@ jobs:
 
       - run:
           name: Setup NPM
-          command: bash .circleci/setup-npm
+          command: cd .. && bash .circleci/setup-npm
 
       - restore_cache:
           name: Restore yarn cache
-          key: yarn-{{ checksum "typescript/yarn.lock" }}
+          key: yarn-{{ checksum "yarn.lock" }}
 
       - run:
           name: Yarn install
-          command: cd typescript && yarn install
+          command: yarn install
 
       - run:
           name: Build package
-          command: cd typescript && yarn build
+          command: yarn build
 
       - run:
           name: Publish package
-          command: cd typescript && npm publish
+          command: npm publish
 
 workflows:
   version: 2
