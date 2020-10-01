@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+cd ruby && bundle exec rake && cd -
+cd typescript && yarn prettier-check && yarn lint && yarn type-check && yarn test && cd -
