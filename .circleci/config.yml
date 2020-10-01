@@ -14,7 +14,8 @@ jobs:
   build_ruby:
     <<: *ruby_defaults
     steps:
-      - checkout
+      - checkout:
+          path: ~/forty-time-management
 
       - run:
           name: Gem install bundler
@@ -37,7 +38,8 @@ jobs:
   test_ruby:
     <<: *ruby_defaults
     steps:
-      - checkout
+      - checkout:
+          path: ~/forty-time-management
 
       - run:
           name: Gem install bundler
@@ -58,7 +60,8 @@ jobs:
   deploy_ruby:
     <<: *ruby_defaults
     steps:
-      - checkout
+      - checkout:
+          path: ~/forty-time-management
 
       - run:
           name: Setup Rubygems
@@ -75,7 +78,8 @@ jobs:
   build_typescript:
     <<: *typescript_defaults
     steps:
-      - checkout
+      - checkout:
+          path: ~/forty-time-management
 
       - restore_cache:
           name: Restore yarn cache
@@ -94,7 +98,8 @@ jobs:
   test_typescript:
     <<: *typescript_defaults
     steps:
-      - checkout
+      - checkout:
+          path: ~/forty-time-management
 
       - restore_cache:
           name: Restore yarn cache
@@ -111,7 +116,8 @@ jobs:
   deploy_typescript:
     <<: *typescript_defaults
     steps:
-      - checkout
+      - checkout:
+          path: ~/forty-time-management
 
       - run:
           name: Setup NPM
