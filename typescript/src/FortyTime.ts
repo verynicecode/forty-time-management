@@ -17,13 +17,14 @@ export class FortyTime extends BaseFortyTime {
 
     if (!input.match(/:/)) throw new FortyTime.ParseError()
 
+    // eslint-disable-next-line prefer-const
     let [hours, extra] = input.split(":").map(Number)
 
     if (input[0] === "-") {
       extra = extra * -1
     }
 
-    let minutes = hours * 60 + extra
+    const minutes = hours * 60 + extra
 
     return new FortyTime(minutes)
   }
