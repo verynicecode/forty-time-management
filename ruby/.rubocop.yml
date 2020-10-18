@@ -1,5 +1,6 @@
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 2.6.5
 
 Layout/LineLength:
   Exclude:

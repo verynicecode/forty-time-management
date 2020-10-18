@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'This gem helps one go between intergers and strings to represent time amounts.'
   spec.homepage      = 'https://www.fortyeven.com/'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.6.5')
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/verynicecode/forty-time-management'
