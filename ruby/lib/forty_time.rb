@@ -20,7 +20,7 @@ class FortyTime
     hours, extra = string.split(':').map(&:to_i)
     extra *= -1 if string[0] == '-'
 
-    hours * 60 + extra
+    (hours * 60) + extra
   end
 
   attr_accessor :minutes
@@ -43,7 +43,7 @@ class FortyTime
 
   def to_s
     hours = (@minutes / 60.0).to_i
-    extra = (@minutes - hours * 60.0).to_i
+    extra = (@minutes - (hours * 60.0)).to_i
 
     if @minutes.negative?
       hours *= -1

@@ -3,12 +3,12 @@ version: 2
 ruby_defaults: &ruby_defaults
   working_directory: ~/forty-time-management/ruby
   docker:
-    - image: ruby:2.6.5
+    - image: ruby:3.1.0
 
 typescript_defaults: &typescript_defaults
   working_directory: ~/forty-time-management/typescript
   docker:
-    - image: node:10.15.3
+    - image: node:16.2.0
 
 jobs:
   build_ruby:
