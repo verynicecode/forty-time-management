@@ -1,3 +1,5 @@
+import { FortyTime } from "../FortyTime"
+import { Config } from "../Config"
 import { Point } from "./Point"
 import { NullFortyTime } from "../NullFortyTime"
 
@@ -62,6 +64,10 @@ describe("Point", () => {
       describe("valid points", () => {
         const validPoints = [
           ["1", 60, "1:00am"],
+          ["1a", 60, "1:00am"],
+          ["1am", 60, "1:00am"],
+          ["1p", 780, "1:00pm"],
+          ["1pm", 780, "1:00pm"],
           ["1:", 60, "1:00am"],
           ["1:0", 60, "1:00am"],
           ["1:00", 60, "1:00am"],
@@ -70,6 +76,10 @@ describe("Point", () => {
           ["1:00p", 780, "1:00pm"],
           ["1:00pm", 780, "1:00pm"],
           ["11", 660, "11:00am"],
+          ["11a", 660, "11:00am"],
+          ["11am", 660, "11:00am"],
+          ["11p", 1380, "11:00pm"],
+          ["11pm", 1380, "11:00pm"],
           ["11:", 660, "11:00am"],
           ["11:0", 660, "11:00am"],
           ["11:00", 660, "11:00am"],
@@ -99,6 +109,10 @@ describe("Point", () => {
           "-1:00",
           "-1:00m",
           "-11:000",
+          "17",
+          "17:",
+          "17:0",
+          "17:00",
         ]
 
         invalidPoints.forEach((invalidValue) => {
@@ -124,6 +138,81 @@ describe("Point", () => {
           expect(() => {
             Point.parse(input)
           }).toThrow(Point.ParseError)
+        })
+      })
+
+      describe("with twentyFourHourTime turned on", () => {
+        beforeAll(() => {
+          FortyTime.Config = { twentyFourHourTime: true }
+        })
+
+        afterAll(() => {
+          FortyTime.Config = Config
+        })
+
+        describe("valid points", () => {
+          const validPoints = [
+            ["1", 60, "1:00"],
+            ["1:", 60, "1:00"],
+            ["1:0", 60, "1:00"],
+            ["1:00", 60, "1:00"],
+            ["11", 660, "11:00"],
+            ["11:", 660, "11:00"],
+            ["11:0", 660, "11:00"],
+            ["11:00", 660, "11:00"],
+            ["17", 1020, "17:00"],
+            ["17:", 1020, "17:00"],
+            ["17:0", 1020, "17:00"],
+            ["17:00", 1020, "17:00"],
+          ]
+
+          validPoints.forEach(
+            ([validValue, expectedMinutes, expectedString]) => {
+              it(`returns a Point with "${expectedMinutes}" minutes and "${expectedString}" as string with "${validValue}"`, () => {
+                const timePoint = Point.parse(validValue)
+                expect(timePoint.value).toEqual(expectedMinutes)
+                expect(timePoint.toString()).toEqual(expectedString)
+              })
+            }
+          )
+        })
+
+        describe("invalid points", () => {
+          const invalidPoints = [
+            ":",
+            "1-",
+            "-:",
+            ":0",
+            "-:0",
+            ":00",
+            "-1:00",
+            "-1:00m",
+            "-11:000",
+            "1a",
+            "1am",
+            "1p",
+            "1pm",
+            "1:00a",
+            "1:00am",
+            "1:00p",
+            "1:00pm",
+            "11a",
+            "11am",
+            "11p",
+            "11pm",
+            "11:00a",
+            "11:00am",
+            "11:00p",
+            "11:00pm",
+          ]
+
+          invalidPoints.forEach((invalidValue) => {
+            it(`throws a parse error with ${invalidValue}`, () => {
+              expect(() => {
+                Point.parse(invalidValue)
+              }).toThrow(Point.ParseError)
+            })
+          })
         })
       })
     })

@@ -1,14 +1,22 @@
 import { BaseFortyTime } from "../BaseFortyTime"
+import { FortyTime } from "../FortyTime"
 import { NullFortyTime } from "../NullFortyTime"
 
 const computeMinutes = (timeValue: string): number => {
-  const pattern = /^\d{1,2}:?\d{0,2}(a|p)?m?$/
+  const { twentyFourHourTime } = FortyTime.Config
+
+  const twentyFourHourPattern = /^\d{1,2}:?\d{0,2}$/
+  const twelveHourPattern = /^\d{1,2}:?\d{0,2}(a|p)?m?$/
+
+  const pattern = twentyFourHourTime ? twentyFourHourPattern : twelveHourPattern
 
   if (!pattern.test(timeValue)) throw new Point.ParseError()
 
   const add12Hours = /pm?/.test(timeValue)
   const cleanValue = timeValue.replace(/(a|p)m?/, "")
   const [first, last] = cleanValue.split(":")
+
+  if (!twentyFourHourTime && Number(first) > 12) throw new Point.ParseError()
 
   const offset = add12Hours ? 12 : 0
   const hours = Number(first) + offset
@@ -47,17 +55,23 @@ export class Point extends BaseFortyTime {
   }
 
   toString = (): string => {
+    const { twentyFourHourTime } = FortyTime.Config
+
     let hours = Math.trunc(this.minutes / 60)
     const extra = this.minutes - hours * 60
     const minutes = extra.toString().padStart(2, "0")
 
     const meridianIndicator = hours < 12 ? "am" : "pm"
 
-    if (hours > 12) {
+    if (!twentyFourHourTime && hours > 12) {
       hours -= 12
     }
 
-    return `${hours}:${minutes}${meridianIndicator}`
+    if (twentyFourHourTime) {
+      return `${hours}:${minutes}`
+    } else {
+      return `${hours}:${minutes}${meridianIndicator}`
+    }
   }
 
   plus = (other: BaseFortyTime): BaseFortyTime => {
