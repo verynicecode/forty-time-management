@@ -39,6 +39,68 @@ describe("Amount", () => {
     })
 
     describe("with a string", () => {
+      describe("valid amounts", () => {
+        const validAmounts = [
+          ["0", null, ""],
+          ["0:", null, ""],
+          ["0:3", 30, "0:30"],
+          ["0:30", 30, "0:30"],
+          ["1", 60, "1:00"],
+          ["1:", 60, "1:00"],
+          ["1:0", 60, "1:00"],
+          ["1:00", 60, "1:00"],
+          ["11", 660, "11:00"],
+          ["11:", 660, "11:00"],
+          ["11:0", 660, "11:00"],
+          ["11:00", 660, "11:00"],
+          ["-", null, ""],
+          ["-0", null, ""],
+          ["-0:", null, ""],
+          ["-0:3", -30, "-0:30"],
+          ["-0:30", -30, "-0:30"],
+          ["-1", -60, "-1:00"],
+          ["-1:", -60, "-1:00"],
+          ["-1:0", -60, "-1:00"],
+          ["-1:00", -60, "-1:00"],
+          ["-11", -660, "-11:00"],
+          ["-11:", -660, "-11:00"],
+          ["-11:0", -660, "-11:00"],
+          ["-11:00", -660, "-11:00"],
+        ]
+
+        validAmounts.forEach(
+          ([validValue, expectedMinutes, expectedString]) => {
+            it(`returns an Amount with "${expectedMinutes}" minutes and "${expectedString}" as string with "${validValue}"`, () => {
+              const timeAmount = Amount.parse(validValue)
+              expect(timeAmount.value).toEqual(expectedMinutes)
+              expect(timeAmount.toString()).toEqual(expectedString)
+            })
+          }
+        )
+      })
+
+      describe("invalid amounts", () => {
+        const invalidAmounts = [
+          ":",
+          "1-",
+          "-:",
+          ":0",
+          "-:0",
+          ":00",
+          "-11:000",
+          "1:00p",
+          "11:00am",
+        ]
+
+        invalidAmounts.forEach((invalidValue) => {
+          it(`throws a parse error with "${invalidValue}"`, () => {
+            expect(() => {
+              Amount.parse(invalidValue)
+            }).toThrow(Amount.ParseError)
+          })
+        })
+      })
+
       describe("with an empty string", () => {
         it("returns a NullFortyTime", () => {
           const input = ""
@@ -53,32 +115,6 @@ describe("Amount", () => {
           expect(() => {
             Amount.parse(input)
           }).toThrow(Amount.ParseError)
-        })
-      })
-
-      describe("with proper formatting", () => {
-        it("parses that string and returns an instance", () => {
-          const input = "8:00"
-          const fortyTime = Amount.parse(input)
-          expect(fortyTime).toBeInstanceOf(Amount)
-        })
-      })
-
-      describe("with some negative minutes", () => {
-        it("parses that string and returns an instance with negative minutes", () => {
-          const input = "-0:30"
-          const fortyTime = Amount.parse(input)
-          expect(fortyTime).toBeInstanceOf(Amount)
-          expect(fortyTime.minutes).toEqual(-30)
-        })
-      })
-
-      describe("with some negative hours", () => {
-        it("parses that string and returns an instance with negative minutes", () => {
-          const input = "-1:30"
-          const fortyTime = Amount.parse(input)
-          expect(fortyTime).toBeInstanceOf(Amount)
-          expect(fortyTime.minutes).toEqual(-90)
         })
       })
     })

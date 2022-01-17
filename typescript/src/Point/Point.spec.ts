@@ -59,6 +59,57 @@ describe("Point", () => {
     })
 
     describe("with a string", () => {
+      describe("valid points", () => {
+        const validPoints = [
+          ["1", 60, "1:00am"],
+          ["1:", 60, "1:00am"],
+          ["1:0", 60, "1:00am"],
+          ["1:00", 60, "1:00am"],
+          ["1:00a", 60, "1:00am"],
+          ["1:00am", 60, "1:00am"],
+          ["1:00p", 780, "1:00pm"],
+          ["1:00pm", 780, "1:00pm"],
+          ["11", 660, "11:00am"],
+          ["11:", 660, "11:00am"],
+          ["11:0", 660, "11:00am"],
+          ["11:00", 660, "11:00am"],
+          ["11:00a", 660, "11:00am"],
+          ["11:00am", 660, "11:00am"],
+          ["11:00p", 1380, "11:00pm"],
+          ["11:00pm", 1380, "11:00pm"],
+        ]
+
+        validPoints.forEach(([validValue, expectedMinutes, expectedString]) => {
+          it(`returns a Point with "${expectedMinutes}" minutes and "${expectedString}" as string with "${validValue}"`, () => {
+            const timePoint = Point.parse(validValue)
+            expect(timePoint.value).toEqual(expectedMinutes)
+            expect(timePoint.toString()).toEqual(expectedString)
+          })
+        })
+      })
+
+      describe("invalid points", () => {
+        const invalidPoints = [
+          ":",
+          "1-",
+          "-:",
+          ":0",
+          "-:0",
+          ":00",
+          "-1:00",
+          "-1:00m",
+          "-11:000",
+        ]
+
+        invalidPoints.forEach((invalidValue) => {
+          it(`throws a parse error with ${invalidValue}`, () => {
+            expect(() => {
+              Point.parse(invalidValue)
+            }).toThrow(Point.ParseError)
+          })
+        })
+      })
+
       describe("with an empty string", () => {
         it("returns a NullFortyTime", () => {
           const input = ""
@@ -70,32 +121,6 @@ describe("Point", () => {
       describe("with a random format", () => {
         it("throws a parse error", () => {
           const input = "asdf"
-          expect(() => {
-            Point.parse(input)
-          }).toThrow(Point.ParseError)
-        })
-      })
-
-      describe("with proper formatting", () => {
-        it("parses that string and returns an instance", () => {
-          const input = "8:00"
-          const fortyTime = Point.parse(input)
-          expect(fortyTime).toBeInstanceOf(Point)
-        })
-      })
-
-      describe("with some negative minutes", () => {
-        it("throws a parse error", () => {
-          const input = "-0:30"
-          expect(() => {
-            Point.parse(input)
-          }).toThrow(Point.ParseError)
-        })
-      })
-
-      describe("with some negative hours", () => {
-        it("throws a parse error", () => {
-          const input = "-1:30"
           expect(() => {
             Point.parse(input)
           }).toThrow(Point.ParseError)
@@ -133,21 +158,21 @@ describe("Point", () => {
     describe("with an input that has no minutes", () => {
       it("returns a properly formatted string", () => {
         const fortyTime = new Point(480)
-        expect(fortyTime.toString()).toEqual("8:00")
+        expect(fortyTime.toString()).toEqual("8:00am")
       })
     })
 
     describe("with an input that has less than 10 minutes", () => {
       it("returns a properly formatted string", () => {
         const fortyTime = new Point(481)
-        expect(fortyTime.toString()).toEqual("8:01")
+        expect(fortyTime.toString()).toEqual("8:01am")
       })
     })
 
     describe("with an input that has more than 10 minutes", () => {
       it("returns a properly formatted string", () => {
         const fortyTime = new Point(491)
-        expect(fortyTime.toString()).toEqual("8:11")
+        expect(fortyTime.toString()).toEqual("8:11am")
       })
     })
   })
