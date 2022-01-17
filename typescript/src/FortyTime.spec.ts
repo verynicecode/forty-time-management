@@ -16,8 +16,8 @@ describe("FortyTime", () => {
       const ptoAmount = FortyTime.Amount.parse(workWeek.ptoMinutes)
       const adjustAmount = FortyTime.Amount.parse(workWeek.adjustMinutes)
 
-      expect(inPoint.toString()).toEqual("9:00")
-      expect(outPoint.toString()).toEqual("17:00")
+      expect(inPoint.toString()).toEqual("9:00am")
+      expect(outPoint.toString()).toEqual("5:00pm")
 
       expect(ptoAmount.toString()).toEqual("")
       expect(adjustAmount.toString()).toEqual("")
@@ -45,8 +45,8 @@ describe("FortyTime", () => {
       const ptoAmount = FortyTime.Amount.parse(workWeek.ptoMinutes)
       const adjustAmount = FortyTime.Amount.parse(workWeek.adjustMinutes)
 
-      expect(inPoint.toString()).toEqual("10:00")
-      expect(outPoint.toString()).toEqual("17:00")
+      expect(inPoint.toString()).toEqual("10:00am")
+      expect(outPoint.toString()).toEqual("5:00pm")
 
       expect(ptoAmount.toString()).toEqual("1:00")
       expect(adjustAmount.toString()).toEqual("-0:30")
