@@ -21,5 +21,9 @@ $ ./bin/release 0.0.0 0.0.1
 This script will find the old version, replace with the new version and then do
 all the git things to get GitHub updated and kick off the release job on Circle.
 
+NOTE! The branch protection rules for `main` get in the way here so before
+running this, ensure `Include administrators` is UNCHECKED. Once done check it
+again to turn the protection back on.
+
 [badge]: https://circleci.com/gh/verynicecode/forty-time-management.svg?style=svg
 [circle]: https://circleci.com/gh/verynicecode/forty-time-management
